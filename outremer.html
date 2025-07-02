@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freedom Radio</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(''); 
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+
+        .radio-player {
+            background: rgba(255, 255, 255, 0); /* Fond transparent */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            width: 90%; /* Utilisation d'une largeur responsive */
+            max-width: 350px; /* Largeur maximum pour les écrans plus grands */
+            border: 2px solid rgba(0, 255, 255, 0.5); /* Bordure semi-transparente */
+        }
+
+        h1 {
+            color: #00ffff; 
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff; 
+        }
+
+        audio {
+            display: none; 
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        button {
+            background: rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            border-radius: 5px;
+            color: #00ffff; 
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-size: 16px; /* Augmenter la taille de police pour la lisibilité */
+        }
+
+        button:hover {
+            background: rgba(0, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .cover {
+            margin: 15px 0;
+        }
+
+        .cover img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid #00ffff; 
+        }
+
+        label {
+            color: #000000; 
+            display: block; /* Améliorer la lisibilité sur mobile */
+            margin-top: 10px;
+        }
+
+        /* Media Queries pour les petits écrans */
+        @media (max-width: 480px) {
+            button {
+                width: 100%; /* Rendre les boutons plein écran sur mobile */
+                font-size: 18px; /* Augmenter la taille de police pour mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="radio-player">
+        <h1 id="radioTitle">Outremer 1ere</h1>
+        <div class="cover">
+            <img id="logoImage" src="" alt="Logo de la radio">
+        </div>
+        <audio id="audio" preload="auto">
+            <source id="audioSource" src="https://reunion.ice.infomaniak.ch/reunion-128.mp3" type="audio/mpeg">
+            Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+        <div>
+            <label for="radioSelect">Choisir une station:</label>
+            <select id="radioSelect">
+                <option value="https://guyane.ice.infomaniak.ch/guyane-128.mp3">Guyane 1ere</option>
+                <option value="https://guadeloupe.ice.infomaniak.ch/guadeloupe-128.mp3">Guadeloupe 1ere</option>
+            	<option value="https://martinique.ice.infomaniak.ch/martinique-128.mp3">Martinique 1ere</option>
+                <option value="https://reunion.ice.infomaniak.ch/reunion-128.mp3">Reunion 1ere</option>
+		<option value="https://mayotte.ice.infomaniak.ch/mayotte-128.mp3">Mayotte 1ere</option>
+                <option value="https://polynesie.ice.infomaniak.ch/polynesie-128.mp3">Polynesie 1ere</option>
+		<option value="https://wallisetfutuna.ice.infomaniak.ch/wallisetfutuna-128.mp3">Wallis Et Futuna 1ere</option>
+                <option value="https://saint-pierreetmiquelon.ice.infomaniak.ch/saint-pierreetmiquelon-128.mp3">St Pierre Et Miquelon 1ere</option>
+		<option value="https://nouvelle-caledonie.ice.infomaniak.ch/nouvelle-caledonie-128.mp3">Nouvelle Caledonie 1ere</option>
+		<option value="https://outremer.ice.infomaniak.ch/outremer-128.mp3">Outremer 1ere</option>
+
+
+</select>
+        </div>
+        <div class="controls">
+            <button id="play" class="play">▶</button>
+            <button id="pause" class="pause">⏸</button>
+            <button id="stop" class="stop">■</button>
+        </div>
+        <div>
+            <label for="volumeControl">Volume:</label>
+            <input id="volumeControl" type="range" min="0" max="1" step="0.1" value="1">
+        </div>
+        <div>
+            <label for="colorSelect">Choisir une couleur:</label>
+            <select id="colorSelect">
+                <option value="yellow">Yellow</option>
+                <option value="pink">Rose Fluo</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const audioSource = document.getElementById('audioSource');
+        const playButton = document.getElementById('play');
+        const pauseButton = document.getElementById('pause');
+        const stopButton = document.getElementById('stop');
+        const radioSelect = document.getElementById('radioSelect');
+        const radioTitle = document.getElementById('radioTitle');
+        const colorSelect = document.getElementById('colorSelect');
+        const radioPlayer = document.querySelector('.radio-player');
+        const volumeControl = document.getElementById('volumeControl');
+
+        radioSelect.addEventListener('change', () => {
+            const selectedValue = radioSelect.value;
+            audioSource.src = selectedValue;
+            audio.load(); 
+            radioTitle.textContent = radioSelect.options[radioSelect.selectedIndex].text; 
+        });
+
+        playButton.addEventListener('click', () => {
+            audio.play();
+        });
+
+        pauseButton.addEventListener('click', () => {
+            audio.pause();
+        });
+
+        stopButton.addEventListener('click', () => {
+            audio.pause();
+            audio.currentTime = 0; 
+        });
+
+        volumeControl.addEventListener('input', () => {
+            audio.volume = volumeControl.value; // Met à jour le volume de l'audio
+        });
+
+        colorSelect.addEventListener('change', () => {
+            const selectedColor = colorSelect.value;
+            if (selectedColor === 'cyan') {
+                radioPlayer.style.border = '2px solid #00ffff'; 
+                h1.style.color = '#00ffff'; 
+                button.style.border = '2px solid #00ffff'; 
+                button.style.background = 'rgba(0, 255, 255, 0.2)'; 
+            } else if (selectedColor === 'pink') {
+                radioPlayer.style.border = '2px solid #ff1493'; 
+                h1.style.color = '#ff1493'; 
+                button.style.border = '2px solid #ff1493'; 
+                button.style.background = 'rgba(255, 20, 147, 0.2)'; 
+            }
+        });
+    </script>
+</body>
+</html>
