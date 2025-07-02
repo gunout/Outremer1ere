@@ -23,18 +23,18 @@
             background: rgba(255, 255, 255, 0); /* Fond transparent */
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(255, 255, 0, 0.5); /* Changé en jaune */
             backdrop-filter: blur(20px);
             text-align: center;
             width: 90%; /* Utilisation d'une largeur responsive */
             max-width: 350px; /* Largeur maximum pour les écrans plus grands */
-            border: 2px solid rgba(0, 255, 255, 0.5); /* Bordure semi-transparente */
+            border: 2px solid rgba(255, 255, 0, 0.5); /* Changé en jaune */
         }
 
         h1 {
-            color: #00ffff; 
+            color: #ffff00; /* Changé en jaune */
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ffff; 
+            text-shadow: 0 0 10px #ffff00; /* Changé en jaune */
         }
 
         audio {
@@ -46,19 +46,19 @@
         }
 
         button {
-            background: rgba(0, 255, 255, 0.2);
-            border: 2px solid #00ffff;
+            background: rgba(255, 255, 0, 0.2); /* Changé en jaune */
+            border: 2px solid #ffff00; /* Changé en jaune */
             border-radius: 5px;
-            color: #00ffff; 
+            color: #ffff00; /* Changé en jaune */
             padding: 10px 15px;
             margin: 5px;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
-            font-size: 16px; /* Augmenter la taille de police pour la lisibilité */
+            font-size: 16px;
         }
 
         button:hover {
-            background: rgba(0, 255, 255, 0.5);
+            background: rgba(255, 255, 0, 0.5); /* Changé en jaune */
             transform: scale(1.05);
         }
 
@@ -69,20 +69,19 @@
         .cover img {
             max-width: 100%;
             border-radius: 10px;
-            border: 2px solid #00ffff; 
+            border: 2px solid #ffff00; /* Changé en jaune */
         }
 
         label {
             color: #000000; 
-            display: block; /* Améliorer la lisibilité sur mobile */
+            display: block;
             margin-top: 10px;
         }
 
-        /* Media Queries pour les petits écrans */
         @media (max-width: 480px) {
             button {
-                width: 100%; /* Rendre les boutons plein écran sur mobile */
-                font-size: 18px; /* Augmenter la taille de police pour mobile */
+                width: 100%;
+                font-size: 18px;
             }
         }
     </style>
@@ -91,7 +90,7 @@
     <div class="radio-player">
         <h1 id="radioTitle">Outremer 1ere</h1>
         <div class="cover">
-            <img id="logoImage" src="https://github.com/gunout/Outremer1ere/blob/main/1ere.png?raw=true" alt="Logo de la radio">
+            <img id="logoImage" src="" alt="Logo de la radio">
         </div>
         <audio id="audio" preload="auto">
             <source id="audioSource" src="https://reunion.ice.infomaniak.ch/reunion-128.mp3" type="audio/mpeg">
@@ -110,9 +109,7 @@
                 <option value="https://saint-pierreetmiquelon.ice.infomaniak.ch/saint-pierreetmiquelon-128.mp3">St Pierre Et Miquelon 1ere</option>
 		<option value="https://nouvelle-caledonie.ice.infomaniak.ch/nouvelle-caledonie-128.mp3">Nouvelle Caledonie 1ere</option>
 		<option value="https://outremer.ice.infomaniak.ch/outremer-128.mp3">Outremer 1ere</option>
-
-
-</select>
+            </select>
         </div>
         <div class="controls">
             <button id="play" class="play">▶</button>
@@ -143,6 +140,8 @@
         const colorSelect = document.getElementById('colorSelect');
         const radioPlayer = document.querySelector('.radio-player');
         const volumeControl = document.getElementById('volumeControl');
+        const buttons = document.querySelectorAll('button');
+        const h1 = document.querySelector('h1');
 
         radioSelect.addEventListener('change', () => {
             const selectedValue = radioSelect.value;
@@ -165,21 +164,33 @@
         });
 
         volumeControl.addEventListener('input', () => {
-            audio.volume = volumeControl.value; // Met à jour le volume de l'audio
+            audio.volume = volumeControl.value;
         });
 
         colorSelect.addEventListener('change', () => {
             const selectedColor = colorSelect.value;
-            if (selectedColor === 'cyan') {
-                radioPlayer.style.border = '2px solid #00ffff'; 
-                h1.style.color = '#00ffff'; 
-                button.style.border = '2px solid #00ffff'; 
-                button.style.background = 'rgba(0, 255, 255, 0.2)'; 
+            if (selectedColor === 'yellow') {
+                radioPlayer.style.border = '2px solid #ffff00';
+                radioPlayer.style.boxShadow = '0 4px 30px rgba(255, 255, 0, 0.5)';
+                h1.style.color = '#ffff00';
+                h1.style.textShadow = '0 0 10px #ffff00';
+                buttons.forEach(button => {
+                    button.style.border = '2px solid #ffff00';
+                    button.style.background = 'rgba(255, 255, 0, 0.2)';
+                    button.style.color = '#ffff00';
+                });
+                document.querySelector('.cover img').style.border = '2px solid #ffff00';
             } else if (selectedColor === 'pink') {
-                radioPlayer.style.border = '2px solid #ff1493'; 
-                h1.style.color = '#ff1493'; 
-                button.style.border = '2px solid #ff1493'; 
-                button.style.background = 'rgba(255, 20, 147, 0.2)'; 
+                radioPlayer.style.border = '2px solid #ff1493';
+                radioPlayer.style.boxShadow = '0 4px 30px rgba(255, 20, 147, 0.5)';
+                h1.style.color = '#ff1493';
+                h1.style.textShadow = '0 0 10px #ff1493';
+                buttons.forEach(button => {
+                    button.style.border = '2px solid #ff1493';
+                    button.style.background = 'rgba(255, 20, 147, 0.2)';
+                    button.style.color = '#ff1493';
+                });
+                document.querySelector('.cover img').style.border = '2px solid #ff1493';
             }
         });
     </script>
